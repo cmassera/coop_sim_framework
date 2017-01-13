@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package>
+  <name>dsrc</name>
+  <version>0.1.0</version>
+  <description>The DSRC package</description>
+
+  <maintainer email="massera@icmc.usp.br">Carlos Massera</maintainer>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>rospy</build_depend>
+  <run_depend>rospy</run_depend>
+  <build_depend>vehicle</build_depend>
+  <run_depend>vehicle</run_depend>
+</package>

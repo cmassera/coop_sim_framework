@@ -1,0 +1,64 @@
+<launch>
+  <!--Plotter -->
+  <node name="plotter" pkg="cacc_plotter" type="plotter.py">
+  </node>
+
+  <!-- DSRC communication channel -->
+  <node name="dsrc_1" pkg="dsrc" type="dsrc_system.py" args="1">
+    <param name="config/transmission_delay" value="0.022" />
+    <param name="config/failure_rate" value="0.01" />
+  </node>
+
+  <!-- Lead vehicle (id = 1) -->
+  <node name="vehicle_1" pkg="vehicle" type="vehicle_system.py" args="1">
+    <param name="parameters/m" value="2000" />
+    <param name="parameters/l" value="2.47" />
+    <param name="parameters/a" value="1.04" />
+    <param name="parameters/Iz" value="2400" />
+    <param name="parameters/Cf" value="100000" />
+    <param name="parameters/Cr" value="100000" />
+    <param name="parameters/maxb" value="-10" />
+
+    <param name="initial_state/x" value="5" />
+    <param name="initial_state/y" value="0" />
+    <param name="initial_state/yaw" value="0" />
+    <param name="initial_state/vx" value="20" />
+    <param name="initial_state/vy" value="0" />
+    <param name="initial_state/r" value="0" />
+
+    <param name="config/dsrc_vehicle_channel" value="1" />
+  </node>
+
+  <!-- Lead vehicle (id = 1) profile -->
+  <node name="profile_1" pkg="longitudinal_controller" type="predefined_profile.py" args="1">
+    <param name="time" value="[0.0,2.0]" />
+    <param name="initial_speed" value="20.0" />
+    <param name="acceleration" value="[-5.0,0.0]" />
+    <param name="steering" value="[0.0,0.0]" />
+  </node>
+
+  <!-- Ego vehicle (id = 2) -->
+  <node name="vehicle_2" pkg="vehicle" type="vehicle_system.py" args="2">
+    <param name="parameters/m" value="2000" />
+    <param name="parameters/l" value="2.47" />
+    <param name="parameters/a" value="1.04" />
+    <param name="parameters/Iz" value="2400" />
+    <param name="parameters/Cf" value="100000" />
+    <param name="parameters/Cr" value="100000" />
+    <param name="parameters/maxb" value="-10" />
+
+    <param name="initial_state/x" value="0" />
+    <param name="initial_state/y" value="0" />
+    <param name="initial_state/yaw" value="0" />
+    <param name="initial_state/vx" value="20" />
+    <param name="initial_state/vy" value="0" />
+    <param name="initial_state/r" value="0" />
+
+    <param name="config/dsrc_vehicle_channel" value="1" />
+  </node>
+
+  <!-- Ego vehicle (id = 2) controller -->
+  <node name="controller_1" pkg="longitudinal_controller" type="controller.py" args="2">
+    <param name="config/dsrc_vehicle_channel" value="1" />
+  </node>
+</launch>
